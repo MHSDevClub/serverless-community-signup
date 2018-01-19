@@ -18,14 +18,6 @@ let slack = new Slack(slackApiToken, slackTeamName, fetch);
 module.exports.inviteUser = (event, context, callback) => {
     const user = JSON.parse(event.body);
 
-    discourse.invite(user.firstName, callback);
+    discourse.invite(user.email, callback);
     slack.invite(user.email, user.firstName, user.lastName, callback);
-
-    callback(null, {
-        statusCode: 200,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            message: "Webhook successfully executed",
-        })
-    });
 };
