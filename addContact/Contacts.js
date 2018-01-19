@@ -31,8 +31,15 @@ class Contacts {
                 ]
             })
         })
-            .then(res => callback(res))
-            .catch(err => console.log(err));
+            .then(res => callback(null, {
+                statusCode: 200,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message: "Contact successfully added",
+                    res
+                })
+            }))
+            .catch(err => callback(err));
     };
 }
 
