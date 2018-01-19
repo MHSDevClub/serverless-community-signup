@@ -1,12 +1,13 @@
 class Contacts {
-    constructor(apiKey) {
+    constructor(apiKey, fetch) {
         this.apiKey = apiKey;
+        this.fetch = fetch;
     }
 
-    add(email, firstname, lastname, studentCode) {
+    add(email, firstname, lastname, studentCode, callback) {
         const requestUrl = `https://api.hubapi.com/contacts/v1/contact/?hapikey=${this.apiKey}`
 
-        fetch(requestUrl, {
+        this.fetch(requestUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -31,7 +32,7 @@ class Contacts {
             })
         })
             .then(res => callback(res))
-            .catch(err => callback(err));
+            .catch(err => console.log(err));
     };
 }
 
