@@ -1,11 +1,13 @@
 class Discourse {
-    constructor(apiKey, apiUsername, baseUrl) {
+    constructor(apiKey, apiUsername, baseUrl, fetch, FormData) {
         this.apiKey = apiKey;
         this.apiUsername = apiUsername;
         this.baseUrl = baseUrl;
+        this.fetch = fetch;
+        this.FormData = FormData;
     }
 
-    invite(email) {
+    invite(email, callback) {
         const requestUrl = `${this.baseUrl}/invites`;
 
         const payload = {
@@ -14,16 +16,22 @@ class Discourse {
             email
         };
 
-        let data = new FormData();
+        let data = new this.FormData();
         for (let key in payload) {
             data.append(key, payload[key]);
         }
 
-        fetch(requestUrl, {
+        this.fetch(requestUrl, {
             method: "POST",
             body: data
         })
-            .then(res => callback(res))
+            .then(res => callback(null, {
+                statusCode: res.statusCode,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    res
+                })
+            }))
             .catch(err => callback(err));
     }
 }
