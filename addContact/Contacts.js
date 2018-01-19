@@ -32,10 +32,10 @@ class Contacts {
             })
         })
             .then(res => callback(null, {
-                statusCode: 200,
+                statusCode: res.statusCode,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    message: "Contact successfully added",
+                    message: res.statusText,
                     res
                 })
             }))
