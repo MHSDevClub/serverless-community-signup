@@ -1,0 +1,17 @@
+{
+  "name": "serverless-community-signup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "dependencies": {
+    "@octokit/rest": "^14.0.3",
+    "form-data": "^2.3.1",
+    "node-fetch": "^1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
