@@ -12,21 +12,20 @@ const Slack = require("./Slack");
 const slackApiToken = process.env.slackApiToken;
 const slackTeamName = process.env.slackTeamName;
 
-let discourse = new Discourse(discourseApiKey, discourseApiUsername, discourseBaseUrl);
-let slack = new Slack(slackApiToken, slackTeamName);
+let discourse = new Discourse(discourseApiKey, discourseApiUsername, discourseBaseUrl, fetch, FormData);
+let slack = new Slack(slackApiToken, slackTeamName, fetch);
 
 module.exports.inviteUser = (event, context, callback) => {
-    const userId = JSON.parse(event).objectId;
+    const user = JSON.parse(event.body);
 
-    fetch(`https://api.hubapi.com/contacts/v1/contact/vid/${userId}/profile?hapikey=${hubspotApiKey}}`)
-        .then(res => {
-            const user = JSON.parse(res);
-            const userEmail = user.properties.email.value;
-            const userFirstName = user.properties.firstname.value;
-            const userLastName = user.properties.lastname.value;
+    discourse.invite(user.firstName, callback);
+    slack.invite(user.email, user.firstName, user.lastName, callback);
 
-            discourse.invite(userEmail);
-            slack.invite(userEmail, userFirstName, userLastName);
+    callback(null, {
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message: "Webhook successfully executed",
         })
-        .catch(err => callback(err));
+    });
 };
