@@ -3,9 +3,9 @@ const fetch = require("node-fetch");
 const querystring = require("querystring");
 
 const Github = require("./Github");
-const githubOrgName;
-const githubClientId;
-const githubClientSecret;
+const githubOrgName = proccess.env.githubOrgName;
+const githubClientId = process.env.githubClientId;
+const githubClientSecret = process.env.githubClientSecret;
 
 let github = new Github(octokit, githubOrgName, githubClientId.githubClientSecret);
 
