@@ -15,6 +15,8 @@ module.exports.inviteGithub = (event, context, callback) => {
             github.getUserInfo(res)
                 .then(res => {
                     github.addOrgMembership(JSON.parse(res.body).login, callback);
-                });
-        });
+                })
+                .catch(err => err);
+        })
+        .catch(err => callback(err));
 }
