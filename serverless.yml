@@ -57,6 +57,8 @@ provider:
     githubClientSecret: ${file(./env.yml):githubClientSecret}
     githubOrgApiKey: ${file(./env.yml):githubOrgApiKey}
 
+    zapierWebhookToken: ${file(./env.yml):zapierWebhookToken}
+
 # you can add packaging information here
 #package:
 #  include:
