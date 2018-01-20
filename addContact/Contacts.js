@@ -31,14 +31,16 @@ class Contacts {
                 ]
             })
         })
-            .then(res => callback(null, {
-                statusCode: res.statusCode,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: res.statusText,
-                    res
+            .then(res => {
+                callback(null, {
+                    statusCode: res.statusCode,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        message: res.statusText,
+                        res
+                    })
                 })
-            }))
+            })
             .catch(err => callback(err));
     };
 }

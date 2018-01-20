@@ -7,7 +7,7 @@ class Discourse {
         this.FormData = FormData;
     }
 
-    invite(email, callback) {
+    invite(email) {
         const requestUrl = `${this.baseUrl}/invites`;
 
         const payload = {
@@ -21,18 +21,12 @@ class Discourse {
             data.append(key, payload[key]);
         }
 
-        this.fetch(requestUrl, {
+        return this.fetch(requestUrl, {
             method: "POST",
             body: data
         })
-            .then(res => callback(null, {
-                statusCode: res.statusCode,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    res
-                })
-            }))
-            .catch(err => callback(err));
+            .then(res => res)
+            .catch(err => err);
     }
 }
 
