@@ -1,54 +1,53 @@
 class Github {
-    constructor(octokit, fetch, orgName, clientId, clientSecret) {
-        this.octokit = octokit;
+    constructor(fetch, querystring, orgName, clientId, clientSecret, orgApiKey) {
         this.fetch = fetch;
+        this.querystring = querystring;
 
         this.orgName = orgName;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.orgApiKey = orgApiKey;
     }
 
     getOAuthToken(authCode) {
+        console.log("Authcode: " + authCode);
         return this.fetch("https://github.com/login/oauth/access_token", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Accept": "application/json"
             },
-            body: querystring.stringify({
+            body: this.querystring.stringify({
                 code: authCode,
                 client_id: this.clientId,
                 client_secret: this.clientSecret
             })
-        }).then(res => JSON.stringify(res.body)[access_token]);
+        })
+            .then(res => res.json())
+            .then(res => res.access_token)
+            .catch(err => err);
     }
 
     getUserInfo(userOAuthToken) {
-        this.octokit.authenticate({
-            type: "oauth",
-            token: userOAuthToken
-        });
-
-        return this.octokit.users.get({})
+        return this.fetch(`https://api.github.com/user?access_token=${userOAuthToken}`)
+            .then(res => res.json())
             .then(res => res)
-            .catch(err => err)
+            .catch(err => err);
     }
 
-    addOrgMembership(username, callback) {
-        this.octokit.authenticate({
-            type: "oauth",
-            key: this.clientId,
-            secret: this.clientSecret
-        });
-
-        this.octokit.orgs.addOrgMembership({ orgName: this.orgName, username, role: "member" })
-            .then(res => callback(null, {
-                statusCode: res.statusCode,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    res
-                })
-            }))
-            .catch(err => callback(err));
+    addOrgMembership(username) {
+        console.log(username);
+        return this.fetch(`https://api.github.com/orgs/MHSDevClub/memberships/${username}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `token ${this.orgApiKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ role: "member" })
+        })
+            .then(res => res)
+            .catch(err => err);
     }
 }
+
+module.exports = Github;

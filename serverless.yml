@@ -55,6 +55,7 @@ provider:
     githubOrgName: ${file(./env.yml):githubOrgName}
     githubClientId: ${file(./env.yml):githubClientId}
     githubClientSecret: ${file(./env.yml):githubClientSecret}
+    githubOrgApiKey: ${file(./env.yml):githubOrgApiKey}
 
 # you can add packaging information here
 #package:
