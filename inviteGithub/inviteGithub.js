@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const querystring = require("querystring");
 
 const Github = require("./Github");
-const githubOrgName = proccess.env.githubOrgName;
+const githubOrgName = process.env.githubOrgName;
 const githubClientId = process.env.githubClientId;
 const githubClientSecret = process.env.githubClientSecret;
 
