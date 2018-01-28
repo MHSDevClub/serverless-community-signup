@@ -53,8 +53,6 @@ provider:
     slackTeamName: ${file(./env.yml):slackTeamName}
 
     githubOrgName: ${file(./env.yml):githubOrgName}
-    githubClientId: ${file(./env.yml):githubClientId}
-    githubClientSecret: ${file(./env.yml):githubClientSecret}
     githubOrgApiKey: ${file(./env.yml):githubOrgApiKey}
 
     zapierWebhookToken: ${file(./env.yml):zapierWebhookToken}
@@ -81,12 +79,7 @@ functions:
       - http:
           path: invite
           method: post
-  inviteGithub:
-    handler: inviteGithub/inviteGithub.inviteGithub
-    events:
-      - http:
-          path: github
-          method: get
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
