@@ -53,8 +53,6 @@ provider:
     slackTeamName: ${file(./env.yml):slackTeamName}
 
     githubOrgName: ${file(./env.yml):githubOrgName}
-    githubClientId: ${file(./env.yml):githubClientId}
-    githubClientSecret: ${file(./env.yml):githubClientSecret}
     githubOrgApiKey: ${file(./env.yml):githubOrgApiKey}
 
     zapierWebhookToken: ${file(./env.yml):zapierWebhookToken}

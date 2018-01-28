@@ -4,8 +4,6 @@ class Github {
         this.querystring = querystring;
 
         this.orgName = orgName;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
         this.orgApiKey = orgApiKey;
     }
 
