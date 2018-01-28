@@ -8,7 +8,7 @@ class Github {
     }
 
     invite(email) {
-        return this.fetch(`https://api.github.com/orgs/MHSDevClub/invitations/`, {
+        return this.fetch(`https://api.github.com/orgs/MHSDevClub/invitations`, {
             method: "POST",
             headers: {
                 "Authorization": `token ${this.orgApiKey}`,
@@ -16,7 +16,7 @@ class Github {
                 "Accept": "application/vnd.github.dazzler-preview+json"
             },
             body: JSON.stringify({
-                email,
+                email: email,
                 role: "direct_member"
             })
         })
