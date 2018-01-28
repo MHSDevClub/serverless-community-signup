@@ -1,5 +1,5 @@
 class Github {
-    constructor(fetch, querystring, orgName, clientId, clientSecret, orgApiKey) {
+    constructor(fetch, querystring, orgName, orgApiKey) {
         this.fetch = fetch;
         this.querystring = querystring;
 
@@ -7,7 +7,7 @@ class Github {
         this.orgApiKey = orgApiKey;
     }
 
-    addOrgMembership(email) {
+    invite(email) {
         return this.fetch(`https://api.github.com/orgs/MHSDevClub/invitations/`, {
             method: "POST",
             headers: {
