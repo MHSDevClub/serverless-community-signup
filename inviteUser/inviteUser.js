@@ -12,31 +12,35 @@ const Slack = require("./Slack");
 const slackApiToken = process.env.slackApiToken;
 const slackTeamName = process.env.slackTeamName;
 
+const zapierWebhookToken = process.env.zapierWebhookToken;
+
 let discourse = new Discourse(discourseApiKey, discourseApiUsername, discourseBaseUrl, fetch, FormData);
 let slack = new Slack(slackApiToken, slackTeamName, fetch);
 
 module.exports.inviteUser = (event, context, callback) => {
-    const user = JSON.parse(event.body);
+    if (event.headers.apiToken === zapierWebhookToken) {
+        const user = JSON.parse(event.body);
 
-    discourse.invite(user.email)
-        .then(res => {
-            callback(null, {
-                statusCode: res.status,
-                body: JSON.stringify({
-                    statusText: res.statusText
+        discourse.invite(user.email)
+            .then(res => {
+                callback(null, {
+                    statusCode: res.status,
+                    body: JSON.stringify({
+                        statusText: res.statusText
+                    })
                 })
             })
-        })
-        .catch(err => callback(err));
+            .catch(err => callback(err));
 
-    slack.invite(user.email, user.firstName, user.lastName)
-        .then(res => {
-            callback(null, {
-                statusCode: res.status,
-                body: JSON.stringify({
-                    statusText: res.statusText
+        slack.invite(user.email, user.firstName, user.lastName)
+            .then(res => {
+                callback(null, {
+                    statusCode: res.status,
+                    body: JSON.stringify({
+                        statusText: res.statusText
+                    })
                 })
             })
-        })
-        .catch(err => callback(err));
+            .catch(err => callback(err));
+    }
 };
